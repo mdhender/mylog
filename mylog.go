@@ -40,7 +40,7 @@ func (l *Log) Add(p interface{}) (id int, err error) {
 
 func (l *Log) Get(id int) (p interface{}, err error) {
 	tmp := l.log // this gives us a snapshot to avoid races (not really)
-	if id < 0 || len(tmp) < id {
+	if id < 0 || len(tmp)-1 < id {
 		return nil, fmt.Errorf("invalid id")
 	}
 	return tmp[id].payload, nil
@@ -48,7 +48,7 @@ func (l *Log) Get(id int) (p interface{}, err error) {
 
 func (l *Log) GetRange(id int) (p []item, err error) {
 	tmp := l.log // this gives us a snapshot to avoid races (not really)
-	if id < 0 || len(tmp) < id {
+	if id < 0 || len(tmp)-1 < id {
 		return nil, fmt.Errorf("invalid id")
 	}
 	return tmp[id:], nil
